@@ -7,8 +7,10 @@ import (
 	"golang.org/x/exp/slices"
 )
 
+// Deck represents a deck of cards, which is a slice of type Card
 type Deck []Card
 
+// New creates new Deck
 func New(count int, filter ...Rank) Deck {
 	deck := make([]Card, 0, 52)
 
@@ -35,6 +37,7 @@ func New(count int, filter ...Rank) Deck {
 	return deck
 }
 
+// Shuffle shuffles deck of cards in random order
 func (deck Deck) Shuffle() {
 	source := rand.NewSource(time.Now().UnixNano())
 	randGenerator := rand.New(source)
@@ -44,15 +47,17 @@ func (deck Deck) Shuffle() {
 	})
 }
 
-// Implementing sort.Interface https://pkg.go.dev/sort#Interface
+// Len implements Len() of sort.Interface
 func (deck Deck) Len() int {
 	return len(deck)
 }
 
+// Len implements Less() of sort.Interface
 func (deck Deck) Less(i, j int) bool {
 	return deck[i].GetAbsRank() < deck[j].GetAbsRank()
 }
 
+// Len implements Swap() of sort.Interface
 func (deck Deck) Swap(i, j int) {
 	deck[i], deck[j] = deck[j], deck[i]
 }
